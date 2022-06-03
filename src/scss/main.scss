@@ -1,0 +1,114 @@
+
+
+* {
+  margin: 0;
+    padding: 0;
+}
+
+.container {
+  display: grid; 
+  grid-auto-columns: 1fr; 
+  grid-auto-rows: 1fr; 
+  grid-template-columns: 1fr; 
+  grid-template-rows: 1fr; 
+  gap: 0px 0px;
+  grid-template-areas: 
+    "header"
+    "form"
+    "edit"
+    "candidates"
+    "footer";
+    height: 100vh;
+  
+
+  .header {
+    background-color: orange;
+    grid-area: header;
+    height: 15vh;
+    h1 {
+      text-align: center;
+    }
+  }
+
+  .form {
+    grid-area: form;
+    height: 15vh;
+
+    form {
+      display: grid;
+        grid-auto-columns: 1fr;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+
+
+      .formInputs {
+        display: grid;
+        grid-auto-columns: 1fr;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas: 
+          "name position contract";
+          margin: 0 auto;
+
+          label {
+            margin-right: 10px;
+          }
+
+          .name {
+            grid-area: name;
+          }
+
+          .position {
+            grid-area: position;
+          }
+          .contract {
+            grid-area: contract;
+          }
+      }
+
+      input[type=submit] {
+        width: 100px;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .editCandidate {
+    grid-area: edit;
+    height: 10vh;
+    margin: 0 auto;
+  }
+
+  .candidates {
+    grid-area: candidates;
+    height: 50vh;
+    margin: 0 auto;
+
+    input[type=text] {
+      border:0;
+      outline:0;
+      outline:none !important;
+    }
+
+    .candidateHeader {
+      display: grid;
+      grid-auto-columns: 1fr;
+      min-width: 100%;
+      grid-template-columns: 25% 25% 25% 25%;
+      margin-right: calc(100vw / 4.5);
+    }
+  }
+
+  footer {
+    grid-area: footer;
+    height: 10vh;
+    background-color: orange;
+    
+    p {
+      text-align: center;
+      vertical-align: middle;
+      margin: 0px;
+      line-height: 50px;
+    }
+  }
+}
