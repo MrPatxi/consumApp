@@ -33,22 +33,19 @@ function App() {
             
         }).then(response => response.json())
         .then(response => {
-            console.log("data: ", response);
 
-            if (response.status !== 200) {
-              updateRefId.current.value = '';
-              setDisabled(false);
-              
-            } 
-            
-            setCandidateData(response);
-            setCandidate(response);
-            setDisabled(true);
+            if (response.id !== undefined) {
+              setCandidateData(response);
+              setCandidate(response);
+              setDisabled(true);
 
-            updateRefId.current.value = response.id;
-            updateRefName.current.value = response.name;
-            updateRefCargo.current.value = response.cargo;
-            updateRefContratar.current.value = response.contratar;
+              updateRefId.current.value = response.id;
+              updateRefName.current.value = response.name;
+              updateRefCargo.current.value = response.cargo;
+              updateRefContratar.current.value = response.contratar;
+            } else {
+              resetInputs();
+            }
         });  
     } catch(e) {
         console.log(e.message)
@@ -74,20 +71,19 @@ function App() {
   const onhandleSubmit = e => {
     e.preventDefault();
 
-    /* if (updateRefId.current.value == '') {
-      //updateRefId.current.value = '';
-      return;
-    } */
+    resetInputs();
 
+    updateCandidate(candidateData.id);
+
+  };
+
+  const resetInputs = () => {
     setDisabled(false);
     updateRefId.current.value = '';
     updateRefName.current.value ='';
     updateRefCargo.current.value = '';
     updateRefContratar.current.value = '';
-
-    updateCandidate(candidateData.id);
-
-  };
+  }
 
   // Cuando introducimos un id en el id de edición, obtenemos el usuario y referenciamos los datos
   const onChangeId = async e => {
