@@ -12,11 +12,6 @@ function App() {
   const [disabled, setDisabled] = useState(false);
   const [candidates, getAllCandidates] = useCandidate([]);
 
-  const updateRefName = useRef();
-  const updateRefCargo = useRef();
-  const updateRefContratar = useRef();
-  const updateRefId = useRef();
-
   // Cada vez que un candidato cambie, obtenemos la lista completa
   useEffect(() => {
     getAllCandidates()
@@ -36,13 +31,7 @@ function App() {
 
             if (response.id !== undefined) {
               setCandidateData(response);
-              setCandidate(response);
               setDisabled(true);
-
-              updateRefId.current.value = response.id;
-              updateRefName.current.value = response.name;
-              updateRefCargo.current.value = response.cargo;
-              updateRefContratar.current.value = response.contratar;
             } else {
               resetInputs();
             }
@@ -59,7 +48,7 @@ function App() {
         fetch(URL + candidateId, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(candidate)
+            body: JSON.stringify(candidateData)
         });
         getAllCandidates()
     } catch(e) {
@@ -72,17 +61,12 @@ function App() {
     e.preventDefault();
 
     resetInputs();
-
     updateCandidate(candidateData.id);
-
   };
 
   const resetInputs = () => {
     setDisabled(false);
-    updateRefId.current.value = '';
-    updateRefName.current.value ='';
-    updateRefCargo.current.value = '';
-    updateRefContratar.current.value = '';
+    setCandidateData({ id: '', name: '', cargo: '', contratar: ''});
   }
 
   // Cuando introducimos un id en el id de edición, obtenemos el usuario y referenciamos los datos
@@ -95,11 +79,10 @@ function App() {
 
   };
 
-  // controlamos el cambio de los inputs de edición
   const handleChange = e => {
     e.preventDefault();
-      setCandidate({
-        ...candidate, // hacemos una copia del state
+      setCandidateData({
+        ...candidateData, // hacemos una copia del state
         [ e.target.name ] : e.target.value
       });
   };
@@ -123,10 +106,10 @@ function App() {
           <form onSubmit={ onhandleSubmit}>
             <label>Editar usuario</label>
             <br />
-            <input type="text" placeholder='Pega un Identificador' name='id' disabled = {(disabled)? "disabled" : ""} ref={updateRefId} onChange={onChangeId} />
-            <input type="text" name='name' ref={updateRefName} onChange={handleChange} />
-            <input type="text" name='cargo' ref={updateRefCargo} onChange={handleChange} />
-            <input type="text" name='contratar' ref={updateRefContratar} onChange={handleChange}/>
+            <input type="text" placeholder='Pega un Identificador' name='id' disabled = {(disabled)? "disabled" : ""} value={candidateData.id} onChange={onChangeId} />
+            <input type="text" name='name'  onChange={handleChange} value={candidateData.name} />
+            <input type="text" name='cargo' onChange={handleChange} value={candidateData.cargo} />
+            <input type="text" name='contratar' onChange={handleChange} value={candidateData.contratar} />
             <input type='submit' value='Editar' />
           </form>
         </div>

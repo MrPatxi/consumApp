@@ -1,14 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import shortid from 'shortid';
 import URL from '../utils/apiUrl'
 
 const Form = ({candidate, setCandidate}) => {
 
     const [error, setError] = useState(false);
-
-    const blankRefName = useRef();
-    const blankRefCargo = useRef();
-    const blankRefContratar = useRef();
 
     const cand = {
         id: shortid.generate(),
@@ -53,10 +49,6 @@ const Form = ({candidate, setCandidate}) => {
 
         setError(false);
         createCandidate(candidate);
-
-        blankRefName.current.value = '';
-        blankRefCargo.current.value = '';
-        blankRefContratar.current.value = '';
     }
 
     return (
@@ -71,7 +63,7 @@ const Form = ({candidate, setCandidate}) => {
                             name='name'
                             onChange={handleChange}
                             placeholder="Type name"
-                            ref={blankRefName}
+                            value={candidate.name}
                         />
                     </div>
                     
@@ -82,7 +74,7 @@ const Form = ({candidate, setCandidate}) => {
                             name='cargo'
                             onChange={handleChange}
                             placeholder="Type position"
-                            ref={blankRefCargo}
+                            value={candidate.cargo}
                         />
                     </div>
 
@@ -93,7 +85,7 @@ const Form = ({candidate, setCandidate}) => {
                             name='contratar'
                             onChange={handleChange}
                             placeholder="Type contract"
-                            ref={blankRefContratar}
+                            value={candidate.contratar}
                         />
                     </div> 
                     </div>
